@@ -2,47 +2,46 @@
 
 Vehicle --o Parking
 
-Vehicle : +Registration
-Vehicle : +CarType
-Vehicle : +Clock EntranceTime
-Vehicle : +Clock DepartureTime
+Vehicle : -Registration
+Vehicle : -CarType
+Vehicle : -Clock EntranceTime
+Vehicle : -Clock DepartureTime
 Vehicle : +Vehicle()
 Vehicle : +VehicleInfo()
 
 Clock : -Minute
 Clock : -Hour
 Clock : -Day
-Clock : -Month
-Clock : -Year
 Clock : +Clock()
 Clock : +void Tick()
 Clock : +string Display()
 
-Parking : #Clock Time
+Clock --o Parking
+
+Parking : -Time
 Parking : -CarList
 Parking : -MaximumCapacity
 Parking : -ActualCapacity
+Parking : -Raport
 Parking : +Parking()
 Parking : +void Entrance(Vehicle v)
 Parking : +void Departure(Vehicle v)
 Parking : +void ParkingCurrentStatus()
 
-RaportDaily : +Vehicles
-RaportDaily : +RaportDaily()
-RaportDaily : +void AddVehicle()
-RaportDaily : +void CleanRaport()
-RaportDaily : +void DisplayRaport()
+Raport : -DailyRaport
+Raport : +Raport()
+Raport : +void AddVehicle()
+Raport : +void CleanDailyRaport()
+Raport : +void DisplayDailyRaport()
+Raport : +void DisplayHistory()
 
-ParkingHistory : +Vehicles
-ParkingHistory : +ParkingHistory()
-ParkingHistory : +void AddVehicle()
-ParkingHistory : +void DisplayHistory()
+Raport --o Parking
+
 
 enum CarTypes {
     Passenger Car
     Delivery Truck
     Truck
 }
-
 
 @enduml
