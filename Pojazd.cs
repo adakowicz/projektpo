@@ -15,11 +15,11 @@ namespace Parking
 {
     internal class Vehicle
     {
-        public string Registration;
-        public CarType CarType;
-        public Clock EntranceTime;
-        public Clock DepartureTime;
-
+        private string Registration;
+        private CarType CarType;
+        private Dictionary<int, List<Clock>> EntranceTime;
+        private Dictionary<int, List<Clock>> DepartureTime;
+      
         public Vehicle(string registration, CarType carType) 
         {
             if(!ValidateRegistration(registration))
@@ -29,8 +29,8 @@ namespace Parking
 
             this.Registration = registration;
             this.CarType = carType;
-            this.EntranceTime = new Clock();
-            this.DepartureTime = new Clock();
+            this.EntranceTime = new Dictionary<int, List<Clock>>();
+            this.DepartureTime = new Dictionary<int, List<Clock>>();
         }
 
         private bool ValidateRegistration(string registration)

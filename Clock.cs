@@ -10,6 +10,7 @@ namespace Parking
 {
     internal class Clock
     {
+
         public int Minute;
         public int Hour;
         public int Day;
@@ -19,6 +20,7 @@ namespace Parking
             Minute = 0;
             Hour = 6;
             Day = 1;
+
         }
 
         public void Tick()
