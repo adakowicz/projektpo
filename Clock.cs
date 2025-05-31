@@ -10,29 +10,51 @@ namespace Parking
 {
     internal class Clock
     {
-        private int Minute;
-        private int Hour;
-        private int Day;
+
+        public int Minute;
+        public int Hour;
+        public int Day;
 
         public Clock()
         {
+            Minute = 0;
+            Hour = 6;
+            Day = 1;
 
         }
 
         public void Tick()
         {
-
+            Minute += 15;
+            if (Minute >= 60)
+            {
+                Minute = 0;
+                Hour++;
+                if (Hour >= 22)
+                {
+                    Hour = 6;
+                    Day++;
+                }
+            }
         }
-        public string DisplayTime() => "";
+        public string DisplayTime()
+        {
+            return $"Dzień {Day} {Hour}:{Minute}";
+        }
 
         public static Clock operator -(Clock a, Clock b)
         {
-            int resultA = (int)(a.Hour * 60 + a.Day * 24 * 60 + a.Minute);
-            int resultB = (int)(b.Hour * 60 + b.Day * 24 * 60 + b.Minute);
+            int resultA;
+            if (a.Minute > 0) resultA = a.Hour + (a.Day - 1) * 16 + 1;
+            else resultA = a.Hour + (a.Day - 1) * 16;
+            int resultB;
+            if (b.Minute > 0) resultB = (int)(b.Hour + (b.Day - 1) * 16 + b.Minute);
+            else resultB = (int)(b.Hour + (b.Day - 1) * 16);
 
             var newClock = new Clock();
-
-            newClock.Minute = resultA - resultB;
+            newClock.Hour = resultA - resultB;
+            
+            return newClock;
         }
     }
 }

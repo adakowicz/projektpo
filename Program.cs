@@ -1,10 +1,12 @@
-﻿namespace Parking
+﻿using System;
+namespace Parking
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Vehicle car1 = new Vehicle("ABC1234", CarType.PassengerCar);
+            Console.WriteLine(car1.VehicleInfo());
         }
     }
 }

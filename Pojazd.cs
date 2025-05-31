@@ -19,7 +19,7 @@ namespace Parking
         private CarType CarType;
         private Dictionary<int, List<Clock>> EntranceTime;
         private Dictionary<int, List<Clock>> DepartureTime;
-
+      
         public Vehicle(string registration, CarType carType) 
         {
             if(!ValidateRegistration(registration))
