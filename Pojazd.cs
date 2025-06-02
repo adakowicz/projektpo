@@ -17,8 +17,9 @@ namespace Parking
     {
         private string Registration;
         private CarType CarType;
-        private Dictionary<int, List<Clock>> EntranceTime;
-        private Dictionary<int, List<Clock>> DepartureTime;
+        private List<Clock> EntranceTime;
+        private List<Clock> DepartureTime;
+        private bool IsParked { get; set; }
       
         public Vehicle(string registration, CarType carType) 
         {
@@ -26,11 +27,11 @@ namespace Parking
             {
                 throw new InvalidRegistrationException("Podana rejestra jest błędna!");
             }
-
+            this.IsParked
             this.Registration = registration;
             this.CarType = carType;
-            this.EntranceTime = new Dictionary<int, List<Clock>>();
-            this.DepartureTime = new Dictionary<int, List<Clock>>();
+            this.EntranceTime = new  List<Clock>();
+            this.DepartureTime = new List<Clock>();
         }
 
         private bool ValidateRegistration(string registration)

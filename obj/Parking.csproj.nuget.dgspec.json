@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mrsho\\Desktop\\studia\\c#\\Parking\\Parking.csproj": {}
+    "C:\\Users\\mrsho\\Source\\Repos\\projektpo1\\Parking.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mrsho\\Desktop\\studia\\c#\\Parking\\Parking.csproj": {
+    "C:\\Users\\mrsho\\Source\\Repos\\projektpo1\\Parking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mrsho\\Desktop\\studia\\c#\\Parking\\Parking.csproj",
+        "projectUniqueName": "C:\\Users\\mrsho\\Source\\Repos\\projektpo1\\Parking.csproj",
         "projectName": "Parking",
-        "projectPath": "C:\\Users\\mrsho\\Desktop\\studia\\c#\\Parking\\Parking.csproj",
+        "projectPath": "C:\\Users\\mrsho\\Source\\Repos\\projektpo1\\Parking.csproj",
         "packagesPath": "C:\\Users\\mrsho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mrsho\\Desktop\\studia\\c#\\Parking\\obj\\",
+        "outputPath": "C:\\Users\\mrsho\\Source\\Repos\\projektpo1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
