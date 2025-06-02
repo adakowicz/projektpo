@@ -8,11 +8,11 @@ namespace Parking
 {
     internal class Parking
     {
-        private Clock Time;
-        private Dictionary<string, Vehicle> CarList;
-        private readonly int MaximumCapacity;
-        private int ActualCapacity;
-        private Dictionary<int, List<Vehicle>> Raport;
+        public Clock Time { get; set; }
+        public Dictionary<string, Vehicle> CarList { get; set; }
+        public readonly int MaximumCapacity { get; set; }
+        public int ActualCapacity { get; set; }
+        public Dictionary<int, List<Vehicle> Raport { get; set; }
 
 
         public void Tick()
@@ -31,14 +31,18 @@ namespace Parking
 
         public void Entrance(Vehicle pojazd)
         {
-            ActualCapacity++;
             if (ActualCapacity > MaximumCapacity)
             {
-                ActualCapacity--;
                 throw new InvalidCapacityException("Parking jest pełny, nie można wprowadzić pojazdu!");
+            }
+            if (Time.Hour > 22) 
+            {
+                throw new OutOfWorkingHoursException("Parking jest zamkniety, prosze parkowac miedzy godzina 6,a 22")
             }
             else
             {
+                
+                ActualCapacity++;
                 pojazd.EntranceTime = Time;
                 CarList[pojazd.Registration] = pojazd;
                 if (!Raport.ContainsKey(Time.Day))
@@ -77,11 +81,15 @@ namespace Parking
             foreach (var vehicle in CarList.Values)
             {
                 Console.WriteLine(vehicle.VehicleInfo());
-            }
+            }   
         }
         internal class InvalidCapacityException : Exception
         {
             public InvalidCapacityException(string message) : base(message) { }
+        }
+        internal class OutOfWorkingHoursException : Exception
+        {
+            public OutOfWorkingHoursException(string message) : base(message) { }
         }
 
     }

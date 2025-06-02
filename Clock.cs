@@ -11,9 +11,9 @@ namespace Parking
     internal class Clock
     {
 
-        public int Minute;
-        public int Hour;
-        public int Day;
+        private int Minute { get; set; }
+        private int Hour { get; set; }
+        private int Day { get; set; }
 
         public Clock()
         {
@@ -30,16 +30,22 @@ namespace Parking
             {
                 Minute = 0;
                 Hour++;
-                if (Hour >= 22)
+                if (Hour >= 23)
                 {
-                    Hour = 6;
+                    Hour = 0;
                     Day++;
                 }
             }
         }
+        public void StartNewDay()
+        {
+            Day++;
+            Hour = 6;
+            Minute = 0;
+        }
         public string DisplayTime()
         {
-            return $"Dzień {Day} {Hour}:{Minute}";
+            return $"Dzień:{Day} {Hour}:{Minute}";
         }
 
         public static Clock operator -(Clock a, Clock b)

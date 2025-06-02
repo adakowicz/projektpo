@@ -8,7 +8,7 @@ namespace Parking
 {
     internal class Raport
     {
-        private Dictionary<int, List<Vehicle>> DailyRaport;
+        private Dictionary<int, List<Vehicle>> DailyRaport { get; set; }
 
         public Raport()
         {
@@ -47,5 +47,9 @@ namespace Parking
                 DisplayDailyRaport(day);
             }
         }     
+        public void DisplayCarHistory(Vehicle pojazd) 
+        { 
+            foreach(var vehicle in )
+        }
     }
 }
