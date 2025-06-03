@@ -15,11 +15,11 @@ namespace Parking
 {
     internal class Vehicle
     {
-        private string Registration;
-        private CarType CarType;
-        private List<Clock> EntranceTime;
-        private List<Clock> DepartureTime;
-        private bool IsParked { get; set; }
+        public string Registration { get; set; }
+        public CarType CarType { get; set; }
+        public List<Clock> EntranceTime { get; set; }
+        public List<Clock> DepartureTime { get; set; }
+        public bool IsParked { get; set; }
       
         public Vehicle(string registration, CarType carType) 
         {
@@ -27,7 +27,7 @@ namespace Parking
             {
                 throw new InvalidRegistrationException("Podana rejestra jest błędna!");
             }
-            this.IsParked
+            this.IsParked = true;
             this.Registration = registration;
             this.CarType = carType;
             this.EntranceTime = new  List<Clock>();

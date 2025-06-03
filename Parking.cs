@@ -39,7 +39,7 @@ namespace Parking
             }
             else
             {
-                pojazd.EntranceTime = Time;
+                pojazd.EntranceTime.Add(Time);
                 CarList[pojazd.Registration] = pojazd;
                 if (!Raport.ContainsKey(Time.Day))
                 {
@@ -52,10 +52,10 @@ namespace Parking
 
         public void Departure(Vehicle pojazd)
         {
-            pojazd.DepartureTime = Time;
+            pojazd.DepartureTime.Add(Time);
             CarList.Remove(pojazd.Registration);
             ActualCapacity--;
-            var czasPostoju = pojazd.DepartureTime - pojazd.EntranceTime;
+            var czasPostoju = pojazd.DepartureTime[^1] - pojazd.EntranceTime[^1];
             if (pojazd.CarType == CarType.PassengerCar || pojazd.CarType == CarType.DeliveryTruck)
             {
                 int Oplata = 20 * czasPostoju.Hour;
