@@ -20,10 +20,10 @@ namespace Parking
                 $"3. Wjedź na parking\n" +
                 $"4. Wyjedź z parkingu\n" +
                 $"5. Wyświetl historię pojazdu\n" +
-                $"6. Wyświetl historię (całego) parkingu\n" +
-                $"7. Przesuń czas" +
-                $"8. Zacznij nowy dzień" +
-                $"9 Zakończ działanie programu");
+                $"6. Wyświetl całą historię parkingu\n" +
+                $"7. Przesuń czas\n" +
+                $"8. Zmiana godziny lub zakończenie dnia\n" +
+                $"9 Zakończ działanie programu.");
                 
             Console.Write("Wybór: ");
             string? wybor = Console.ReadLine();
