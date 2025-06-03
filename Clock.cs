@@ -53,8 +53,30 @@ namespace Parking
 
             var newClock = new Clock();
             newClock.Hour = resultA - resultB;
-            
+
             return newClock;
+        }
+
+        public void SkipToEndOfDay()
+        {
+            while (Hour < 22)
+            {
+                Tick();
+            }
+        }
+
+        public void SkipToHour(int targetHour)
+        {
+            if (targetHour < Hour || targetHour > 21)
+            {
+                Console.WriteLine("Nieprawidłowa godzina.");
+                return;
+            }
+
+            while (Hour < targetHour)
+            {
+                Tick();
+            }
         }
     }
 }

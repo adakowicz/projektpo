@@ -8,12 +8,11 @@ namespace Parking
 {
     internal class Parking
     {
-        private Clock Time;
+        public Clock Time { get; private set;  }
         private Dictionary<string, Vehicle> CarList;
         private readonly int MaximumCapacity;
         private int ActualCapacity;
-        private Dictionary<int, List<Vehicle>> Raport;
-
+        private Raport Raport;
 
         public void Tick()
         {
@@ -26,7 +25,7 @@ namespace Parking
             CarList = new Dictionary<string, Vehicle>();
             MaximumCapacity = 50;
             ActualCapacity = 0;
-            Raport = new Dictionary<int, List<Vehicle>>();
+            Raport = new Raport();
         }
 
         public void Entrance(Vehicle pojazd)
@@ -41,11 +40,7 @@ namespace Parking
             {
                 pojazd.EntranceTime.Add(Time);
                 CarList[pojazd.Registration] = pojazd;
-                if (!Raport.ContainsKey(Time.Day))
-                {
-                    Raport[Time.Day] = new List<Vehicle>();
-                }
-                Raport[Time.Day].Add(pojazd);
+                Raport.AddVehicle(Time.Day, pojazd);
                 Time.Tick();
             }
         }
@@ -84,5 +79,19 @@ namespace Parking
             public InvalidCapacityException(string message) : base(message) { }
         }
 
+        public void ShowHistory()
+        {
+            Raport.DisplayHistory();
+        }
+
+        public void SkipToEndOfDay()
+        {
+            Time.SkipToEndOfDay();
+        }
+
+        public void SkipToHour(int hour)
+        {
+            Time.SkipToHour(hour);
+        }
     }
 }
