@@ -46,6 +46,6 @@ namespace Parking
             {
                 DisplayDailyRaport(day);
             }
-        }     
+        }
     }
 }

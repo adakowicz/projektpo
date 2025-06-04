@@ -39,7 +39,15 @@ namespace Parking
         }
         public string DisplayTime()
         {
-            return $"Dzień {Day} {Hour}:{Minute}";
+            return $"Dzień {Day} {Hour:D2}:{Minute:D2}";
+        }
+
+        public int RoznicaMinut(Clock other)
+        {
+            int minuty1 = (Day - 1) * 16 * 60 + (Hour - 6) * 60 + Minute;
+            int minuty2 = (other.Day - 1) * 16 * 60 + (other.Hour - 6) * 60 + other.Minute;
+
+            return minuty1 - minuty2;
         }
 
         public static Clock operator -(Clock a, Clock b)
@@ -53,8 +61,30 @@ namespace Parking
 
             var newClock = new Clock();
             newClock.Hour = resultA - resultB;
-            
+
             return newClock;
+        }
+
+        public void SkipToEndOfDay()
+        {
+            while (!(Hour == 21 && Minute == 45))
+            {
+                Tick();
+            }
+        }
+
+        public void SkipToHour(int targetHour)
+        {
+            if (targetHour < Hour || targetHour > 21)
+            {
+                Console.WriteLine("Nieprawidłowa godzina.");
+                return;
+            }
+
+            while (Hour < targetHour)
+            {
+                Tick();
+            }
         }
     }
 }

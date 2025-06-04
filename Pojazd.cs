@@ -25,7 +25,7 @@ namespace Parking
         {
             if(!ValidateRegistration(registration))
             {
-                throw new InvalidRegistrationException("Podana rejestra jest błędna!");
+                throw new InvalidRegistrationException("Podana rejestracja jest błędna!");
             }
             this.IsParked = true;
             this.Registration = registration;

@@ -8,12 +8,11 @@ namespace Parking
 {
     internal class Parking
     {
-        private Clock Time;
+        public Clock Time { get; private set; }
         private Dictionary<string, Vehicle> CarList;
         private readonly int MaximumCapacity;
         private int ActualCapacity;
-        private Dictionary<int, List<Vehicle>> Raport;
-
+        private Raport Raport;
 
         public void Tick()
         {
@@ -26,7 +25,7 @@ namespace Parking
             CarList = new Dictionary<string, Vehicle>();
             MaximumCapacity = 50;
             ActualCapacity = 0;
-            Raport = new Dictionary<int, List<Vehicle>>();
+            Raport = new Raport();
         }
 
         public void Entrance(Vehicle pojazd)
@@ -35,37 +34,42 @@ namespace Parking
             if (ActualCapacity > MaximumCapacity)
             {
                 ActualCapacity--;
-                throw new InvalidCapacityException("Parking jest pełny, nie można wprowadzić pojazdu!");
+                throw new InvalidCapacityException("Parking jest pełny, nie można dodać pojazdu!");
             }
             else
             {
-                pojazd.EntranceTime.Add(Time);
+                pojazd.EntranceTime.Add(new Clock { Day = Time.Day, Hour = Time.Hour, Minute = Time.Minute });
                 CarList[pojazd.Registration] = pojazd;
-                if (!Raport.ContainsKey(Time.Day))
-                {
-                    Raport[Time.Day] = new List<Vehicle>();
-                }
-                Raport[Time.Day].Add(pojazd);
+                Raport.AddVehicle(Time.Day, pojazd);
                 Time.Tick();
             }
         }
 
         public void Departure(Vehicle pojazd)
         {
-            pojazd.DepartureTime.Add(Time);
+            pojazd.DepartureTime.Add(new Clock { Day = Time.Day, Hour = Time.Hour, Minute = Time.Minute });
             CarList.Remove(pojazd.Registration);
             ActualCapacity--;
+
             var czasPostoju = pojazd.DepartureTime[^1] - pojazd.EntranceTime[^1];
+
+            int rozpoczeteGodz = czasPostoju.Hour;
+            if (czasPostoju.Minute > 0)
+                rozpoczeteGodz += 1;
+
+            int oplata = 0;
             if (pojazd.CarType == CarType.PassengerCar || pojazd.CarType == CarType.DeliveryTruck)
             {
-                int Oplata = 20 * czasPostoju.Hour;
-                Console.WriteLine($"Pojazd {pojazd.Registration} opuścił parking. Czas postoju: {czasPostoju} - opłata: {Oplata} zl");
+                oplata = 20 * rozpoczeteGodz;
             }
             else
             {
-                int OplataT = 60 * czasPostoju.Hour;
-                Console.WriteLine($"Pojazd {pojazd.Registration} opuścił parking. Czas postoju: {czasPostoju} - opłata: {OplataT} zl");
+                oplata = 60 * rozpoczeteGodz;
             }
+
+            Console.WriteLine($"Pojazd {pojazd.Registration} opuścił parking. Czas postoju: {czasPostoju.DisplayTime()} - opłata: {oplata} zł");
+            Console.WriteLine("Wyjazd zarejestrowany.");
+            Przerwa();
             Time.Tick();
         }
 
@@ -84,5 +88,30 @@ namespace Parking
             public InvalidCapacityException(string message) : base(message) { }
         }
 
+        public void ShowHistory()
+        {
+            Raport.DisplayHistory();
+        }
+
+        public void SkipToEndOfDay()
+        {
+            Time.SkipToEndOfDay();
+        }
+
+        public void SkipToHour(int hour)
+        {
+            Time.SkipToHour(hour);
+        }
+
+        public void ShowDailyRaport(int day)
+        {
+            Raport.DisplayDailyRaport(day);
+        }
+        
+         private void Przerwa()
+        {
+            Console.WriteLine("\nNaciśnij dowolny klawisz, aby kontynuować.");
+            Console.ReadKey();
+        }
     }
 }
