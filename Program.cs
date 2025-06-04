@@ -19,6 +19,7 @@ namespace Parking
 
         start:
             Console.Clear();
+            parking.ParkingCurrentStatus();
             Console.WriteLine($"\nAktualny czas: {parking.Time.DisplayTime()}");
             Console.WriteLine($"" +
                 $"1. Dodaj pojazd\n" +
