@@ -60,7 +60,8 @@ Projekt został stworzony w celu symulacji systemu obsługi parkingu. Aby pokaza
 - interfejsu tekstowego
 - symulacji czasu
 - przeciążenia operatora
-Jako relacji między klasami użyliśmy: agregacji, kompozycji i dziedziczenia.
+
+Relacje między klasami jakimi się posłużyliśmy to: agregacja, kompozycja i dziedziczenie.
 
 ## Autorzy
 - Oliwia Banachowska
