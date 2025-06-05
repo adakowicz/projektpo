@@ -30,12 +30,17 @@ namespace Parking
 
         public void Entrance(Vehicle pojazd)
         {
+            if (pojazd.IsParked == true)
+            {
+                throw new VehicleAlreadyParkedException("Wybrany pojazd juz jest zaparkowany!");
+            }
             ActualCapacity++;
             if (ActualCapacity > MaximumCapacity)
             {
                 ActualCapacity--;
                 throw new InvalidCapacityException("Parking jest pełny, nie można dodać pojazdu!");
             }
+
             else
             {
                 pojazd.EntranceTime.Add(new Clock { Day = Time.Day, Hour = Time.Hour, Minute = Time.Minute });
@@ -47,6 +52,10 @@ namespace Parking
 
         public void Departure(Vehicle pojazd)
         {
+            if(pojazd.IsParked == false)
+            {
+                throw new VehicleAlreadyOutOfParkingException("Nie mozna wyjechac z parkingu pojazdem ktory sie tam nie znajduje!");
+            }
             pojazd.DepartureTime.Add(new Clock { Day = Time.Day, Hour = Time.Hour, Minute = Time.Minute });
             CarList.Remove(pojazd.Registration);
             ActualCapacity--;
@@ -83,11 +92,6 @@ namespace Parking
                 Console.WriteLine(vehicle.VehicleInfo());
             }
         }
-        internal class InvalidCapacityException : Exception
-        {
-            public InvalidCapacityException(string message) : base(message) { }
-        }
-
         public void ShowHistory()
         {
             Raport.DisplayHistory();
@@ -113,5 +117,17 @@ namespace Parking
             Console.WriteLine("\nNaciśnij dowolny klawisz, aby kontynuować.");
             Console.ReadKey();
         }
+    }
+    internal class InvalidCapacityException : Exception
+    {
+        public InvalidCapacityException(string message) : base(message) { }
+    }
+    internal class VehicleAlreadyParkedException : Exception
+    {
+        public VehicleAlreadyParkedException(string message) : base(message) { }
+    }
+    internal class VehicleAlreadyOutOfParkingException : Exception
+    {
+        public VehicleAlreadyOutOfParkingException(string message) : base(message) { }
     }
 }

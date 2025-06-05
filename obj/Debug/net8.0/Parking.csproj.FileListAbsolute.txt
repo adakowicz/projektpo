@@ -1,0 +1,15 @@
+C:\Users\mrsho\Source\Repos\projektpo1\bin\Debug\net8.0\Parking.exe
+C:\Users\mrsho\Source\Repos\projektpo1\bin\Debug\net8.0\Parking.deps.json
+C:\Users\mrsho\Source\Repos\projektpo1\bin\Debug\net8.0\Parking.runtimeconfig.json
+C:\Users\mrsho\Source\Repos\projektpo1\bin\Debug\net8.0\Parking.dll
+C:\Users\mrsho\Source\Repos\projektpo1\bin\Debug\net8.0\Parking.pdb
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\Parking.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\Parking.AssemblyInfoInputs.cache
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\Parking.AssemblyInfo.cs
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\Parking.csproj.CoreCompileInputs.cache
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\Parking.sourcelink.json
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\Parking.dll
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\refint\Parking.dll
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\Parking.pdb
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\Parking.genruntimeconfig.cache
+C:\Users\mrsho\Source\Repos\projektpo1\obj\Debug\net8.0\ref\Parking.dll
