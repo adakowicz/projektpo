@@ -60,9 +60,9 @@ Projekt został stworzony w celu symulacji systemu obsługi parkingu. Aby pokaza
 - interfejsu tekstowego
 - symulacji czasu
 - przeciążenia operatora
+Jako relacji między klasami użyliśmy: agregacji, kompozycji i dziedziczenia.
 
 ## Autorzy
 - Oliwia Banachowska
 - Amelia Dakowicz
 - Maciej Klepacki
-
