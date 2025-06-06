@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Parking
+﻿namespace Parking
 {
     internal class Program
     {

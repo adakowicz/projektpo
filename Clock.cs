@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Schema;
-
-namespace Parking
+﻿namespace Parking
 {
     internal class Clock
     {
@@ -52,17 +44,19 @@ namespace Parking
 
         public static Clock operator -(Clock a, Clock b)
         {
-            int resultA;
-            if (a.Minute > 0) resultA = a.Hour + (a.Day - 1) * 16 + 1;
-            else resultA = a.Hour + (a.Day - 1) * 16;
-            int resultB;
-            if (b.Minute > 0) resultB = (int)(b.Hour + (b.Day - 1) * 16 + b.Minute);
-            else resultB = (int)(b.Hour + (b.Day - 1) * 16);
+            int totalMinutesA = ((a.Day - 1) * 24 + a.Hour) * 60 + a.Minute;
+            int totalMinutesB = ((b.Day - 1) * 24 + b.Hour) * 60 + b.Minute;
+            int diffMinutes = totalMinutesA - totalMinutesB;
+            int days = diffMinutes / (24 * 60) + 1;
+            int hours = (diffMinutes % (24 * 60)) / 60;
+            int minutes = diffMinutes % 60;
 
-            var newClock = new Clock();
-            newClock.Hour = resultA - resultB;
-
-            return newClock;
+            return new Clock
+            {
+                Day = days,
+                Hour = hours,
+                Minute = minutes
+            };
         }
 
         public void SkipToEndOfDay()

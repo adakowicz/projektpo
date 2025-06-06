@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Parking
+﻿namespace Parking
 {
     internal class Parking
     {
@@ -34,6 +28,7 @@ namespace Parking
             {
                 throw new VehicleAlreadyParkedException("Wybrany pojazd juz jest zaparkowany!");
             }
+            pojazd.IsParked = true;
             ActualCapacity++;
             if (ActualCapacity > MaximumCapacity)
             {
@@ -52,10 +47,11 @@ namespace Parking
 
         public void Departure(Vehicle pojazd)
         {
-            if(pojazd.IsParked == false)
+            if (pojazd.IsParked == false)
             {
                 throw new VehicleAlreadyOutOfParkingException("Nie mozna wyjechac z parkingu pojazdem ktory sie tam nie znajduje!");
             }
+            pojazd.IsParked = false;
             pojazd.DepartureTime.Add(new Clock { Day = Time.Day, Hour = Time.Hour, Minute = Time.Minute });
             CarList.Remove(pojazd.Registration);
             ActualCapacity--;
@@ -111,8 +107,8 @@ namespace Parking
         {
             Raport.DisplayDailyRaport(day);
         }
-        
-         private void Przerwa()
+
+        private void Przerwa()
         {
             Console.WriteLine("\nNaciśnij dowolny klawisz, aby kontynuować.");
             Console.ReadKey();
