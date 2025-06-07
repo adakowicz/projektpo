@@ -42,7 +42,14 @@
 
                     if (string.IsNullOrWhiteSpace(rejestracja))
                     {
-                        Console.WriteLine("Rejestracja nie może być pusta!");
+                        Console.WriteLine("Rejestracja nie może być pusta.");
+                        goto start;
+                    }
+
+                    if (pojazdy.Any(pojazdy => pojazdy.Registration == rejestracja))
+                    {
+                        Console.WriteLine("Pojazd o podanej rejestracji już istnieje.");
+                        Przerwa();
                         goto start;
                     }
 
@@ -61,7 +68,7 @@
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Błąd: {ex.Message}");
+                        Console.WriteLine($"{ex.Message}");
                     }
                     Przerwa();
                     goto start;
@@ -122,11 +129,10 @@
                     try
                     {
                         parking.Departure(pojazdy[wybranyPojazd]);
-                        Console.WriteLine("Wyjazd zarejestrowany.");
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Błąd: {ex.Message}");
+                        Console.WriteLine($"{ex.Message}");
                     }
 
                     Przerwa();
@@ -143,8 +149,8 @@
                     Console.WriteLine("Historia pojazdu:");
                     for (int i = 0; i < pojazd.EntranceTime.Count; i++)
                     {
-                        string wyj = i < pojazd.DepartureTime.Count ? pojazd.DepartureTime[i].DisplayTime() : "Pojazd jest stoi na parkingu.";
-                        Console.WriteLine($"Wjazd: {pojazd.EntranceTime[i].DisplayTime()} - Wyjazd: {wyj}");
+                        string wyj = i < pojazd.DepartureTime.Count ? pojazd.DepartureTime[i].DisplayTime() : "Pojazd wciąż jest na parkingu.";
+                        Console.WriteLine($"Wjazd: {pojazd.EntranceTime[i].DisplayTime()} Wyjazd: {wyj}");
                     }
                     Przerwa();
                     goto start;
@@ -199,8 +205,15 @@
                             }
                             else
                             {
-                                parking.SkipToHour(godzina);
-                                Console.WriteLine($"Czas przesunięty na godzinę {godzina:D2}:00.");
+                                try
+                                {
+                                    parking.SkipToHour(godzina);
+                                    Console.WriteLine($"Czas przesunięty na godzinę {godzina:D2}:00.");
+                                }
+                                catch (InvalidHourException ex)
+                                {
+                                    Console.WriteLine($"{ex.Message}");
+                                }
                                 Przerwa();
                                 goto start;
                             }

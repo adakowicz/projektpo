@@ -71,8 +71,7 @@
         {
             if (targetHour < Hour || targetHour > 21)
             {
-                Console.WriteLine("Nieprawidłowa godzina.");
-                return;
+                throw new InvalidHourException("Nieprawidłowa godzina - można przesunąć tylko między 6 a 21.");
             }
 
             while (Hour < targetHour)
