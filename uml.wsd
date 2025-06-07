@@ -1,44 +1,54 @@
-@startuml
+@startuml name "Parking Simulator"
+title Symulator parkingu Oliwia Banachowska Amelia Dakowicz Maciej Klepacki
 
 Vehicle --o Parking
 
-Vehicle : -Registration
-Vehicle : -CarType
-Vehicle : -Clock EntranceTime
-Vehicle : -Clock DepartureTime
-Vehicle : +Vehicle()
-Vehicle : +VehicleInfo()
+Vehicle : +string Registration
+Vehicle : +CarType carType
+Vehicle : +List<Clock> EntranceTime
+Vehicle : +List<Clock> DepartureTime
+Vehicle : +bool IsParked
+Vehicle : +Vehicle(string registration, CarType carType)
+Vehicle : -void ValidateRegistration(string registration)
+Vehicle : +string VehicleInfo()
 
-Clock : -Minute
-Clock : -Hour
-Clock : -Day
+Clock : +int Minute
+Clock : +int Hour
+Clock : +int Day
 Clock : +Clock()
 Clock : +void Tick()
-Clock : +string Display()
+Clock : +string DisplayTime()
+Clock : + {static} operator -(Clock a, Clock b)
+Clock : +void SkipToEndOfDay()
+Clock : +void SkipToHour(int targetHour)
 
-Clock --o Parking
+Clock --* Parking
 
-Parking : -Time
-Parking : -CarList
-Parking : -MaximumCapacity
-Parking : -ActualCapacity
-Parking : -Raport
+Parking : +Clock Time
+Parking : -Dictionary<string, Vehicle> CarList
+Parking : -int MaximumCapacity
+Parking : -int ActualCapacity
+Parking : -Raport Raport
 Parking : +Parking()
-Parking : +void Entrance(Vehicle v)
-Parking : +void Departure(Vehicle v)
+Parking : +void Tick()
+Parking : +void Entrance(Vehicle vehicle)
+Parking : +void Departure(Vehicle vehicle)
 Parking : +void ParkingCurrentStatus()
+Parking : +void ShowDailyRaport(int day)
+Parking : +void ShowHistory()
+Parking : +void SkipToEndOfDay()
+Parking : +void SkipToHour(int hour)
 
-Raport : -DailyRaport
+Raport : -Dictionary<int, List<Vehicle>> DailyRaport
 Raport : +Raport()
-Raport : +void AddVehicle()
-Raport : +void CleanDailyRaport()
-Raport : +void DisplayDailyRaport()
+Raport : +void AddVehicle(int Day, Vehicle vehicle)
+Raport : +void DisplayDailyRaport(int Day)
 Raport : +void DisplayHistory()
 
-Raport --o Parking
+Raport --* Parking
 
 
-enum CarTypes {
+enum CarType {
     Passenger Car
     Delivery Truck
     Truck
