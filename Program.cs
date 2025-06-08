@@ -1,4 +1,4 @@
-﻿namespace Parking
+namespace Parking
 {
     internal class Program
     {
@@ -242,11 +242,7 @@
                     Console.WriteLine("Proszę wybrać opcję od 1 do 10.");
                     Przerwa();
                     goto start;
-
             }
-
-            //Vehicle car1 = new Vehicle("ABC1234", CarType.PassengerCar);
-            //Console.WriteLine(car1.VehicleInfo());
         }
     }
 }

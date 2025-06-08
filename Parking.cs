@@ -1,4 +1,4 @@
-﻿namespace Parking
+namespace Parking
 {
     internal class Parking
     {
@@ -105,6 +105,7 @@
                 Console.WriteLine(vehicle.VehicleInfo());
             }
         }
+      
         public void ShowHistory()
         {
             Raport.DisplayHistory();
