@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Parking
+﻿namespace Parking
 {
     internal class Parking
     {
-        private Clock Time;
+        public Clock Time { get; private set; }
         private Dictionary<string, Vehicle> CarList;
         private readonly int MaximumCapacity;
         private int ActualCapacity;
-        private Dictionary<int, List<Vehicle>> Raport;
-
+        private Raport Raport;
 
         public void Tick()
         {
@@ -26,63 +19,108 @@ namespace Parking
             CarList = new Dictionary<string, Vehicle>();
             MaximumCapacity = 50;
             ActualCapacity = 0;
-            Raport = new Dictionary<int, List<Vehicle>>();
+            Raport = new Raport();
         }
 
         public void Entrance(Vehicle pojazd)
         {
+            if (pojazd.IsParked == true)
+            {
+                throw new VehicleAlreadyParkedException("Wybrany pojazd jest już zaparkowany.");
+            }
+            pojazd.IsParked = true;
             ActualCapacity++;
             if (ActualCapacity > MaximumCapacity)
             {
                 ActualCapacity--;
-                throw new InvalidCapacityException("Parking jest pełny, nie można wprowadzić pojazdu!");
+                throw new InvalidCapacityException("Parking jest pełny, nie można dodać pojazdu.");
             }
             else
             {
-                pojazd.EntranceTime.Add(Time);
+                pojazd.EntranceTime.Add(new Clock { Day = Time.Day, Hour = Time.Hour, Minute = Time.Minute });
                 CarList[pojazd.Registration] = pojazd;
-                if (!Raport.ContainsKey(Time.Day))
-                {
-                    Raport[Time.Day] = new List<Vehicle>();
-                }
-                Raport[Time.Day].Add(pojazd);
+                Raport.AddVehicle(Time.Day, pojazd);
                 Time.Tick();
             }
         }
 
         public void Departure(Vehicle pojazd)
         {
-            pojazd.DepartureTime.Add(Time);
+            if (!pojazd.IsParked || pojazd.EntranceTime.Count == pojazd.DepartureTime.Count)
+            {
+                throw new VehicleAlreadyOutOfParkingException("Nie można wyjechać z parkingu pojazdem, który nie jest na nim zaparkowany.");
+            }
+            pojazd.IsParked = false;
+            pojazd.DepartureTime.Add(new Clock { Day = Time.Day, Hour = Time.Hour, Minute = Time.Minute });
             CarList.Remove(pojazd.Registration);
             ActualCapacity--;
+
             var czasPostoju = pojazd.DepartureTime[^1] - pojazd.EntranceTime[^1];
+
+            int rozpoczeteGodz = czasPostoju.Hour;
+            if (czasPostoju.Minute > 0)
+                rozpoczeteGodz += 1;
+
+            int oplata = 0;
             if (pojazd.CarType == CarType.PassengerCar || pojazd.CarType == CarType.DeliveryTruck)
             {
-                int Oplata = 20 * czasPostoju.Hour;
-                Console.WriteLine($"Pojazd {pojazd.Registration} opuścił parking. Czas postoju: {czasPostoju} - opłata: {Oplata} zl");
+                oplata = 20 * rozpoczeteGodz;
             }
             else
             {
-                int OplataT = 60 * czasPostoju.Hour;
-                Console.WriteLine($"Pojazd {pojazd.Registration} opuścił parking. Czas postoju: {czasPostoju} - opłata: {OplataT} zl");
+                oplata = 60 * rozpoczeteGodz;
             }
+
+            Console.WriteLine($"Pojazd {pojazd.Registration} opuścił parking. Czas postoju: {czasPostoju.DisplayTime()} - opłata: {oplata} zł");
+            Console.WriteLine("Wyjazd zarejestrowany.");
             Time.Tick();
         }
 
         public void ParkingCurrentStatus()
         {
             Console.WriteLine($"Aktualny czas: {Time.DisplayTime()}");
-            Console.WriteLine($"Aktualna liczba pojazdów: {ActualCapacity} na {MaximumCapacity} dostepnych miejsc");
+            Console.WriteLine($"Aktualna liczba pojazdów: {ActualCapacity} na {MaximumCapacity} dostępnych miejsc");
             Console.WriteLine("Lista pojazdów na parkingu:");
             foreach (var vehicle in CarList.Values)
             {
                 Console.WriteLine(vehicle.VehicleInfo());
             }
         }
+        public void ShowHistory()
+        {
+            Raport.DisplayHistory();
+        }
+
+        public void SkipToEndOfDay()
+        {
+            Time.SkipToEndOfDay();
+        }
+
+        public void SkipToHour(int hour)
+        {
+            Time.SkipToHour(hour);
+        }
+
+        public void ShowDailyRaport(int day)
+        {
+            Raport.DisplayDailyRaport(day);
+        }
+    }
+
         internal class InvalidCapacityException : Exception
         {
             public InvalidCapacityException(string message) : base(message) { }
         }
-
-    }
+        internal class VehicleAlreadyParkedException : Exception
+        {
+            public VehicleAlreadyParkedException(string message) : base(message) { }
+        }
+        internal class VehicleAlreadyOutOfParkingException : Exception
+        {
+            public VehicleAlreadyOutOfParkingException(string message) : base(message) { }
+        }
+        internal class InvalidHourException : Exception
+        {
+            public InvalidHourException(string message) : base(message) { }
+        }
 }

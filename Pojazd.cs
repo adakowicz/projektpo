@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
+﻿using System.Text.RegularExpressions;
 enum CarType
 {
     PassengerCar,
@@ -25,9 +19,9 @@ namespace Parking
         {
             if(!ValidateRegistration(registration))
             {
-                throw new InvalidRegistrationException("Podana rejestra jest błędna!");
+                throw new InvalidRegistrationException("Podana rejestracja jest błędna.");
             }
-            this.IsParked = true;
+            this.IsParked = false;
             this.Registration = registration;
             this.CarType = carType;
             this.EntranceTime = new  List<Clock>();
